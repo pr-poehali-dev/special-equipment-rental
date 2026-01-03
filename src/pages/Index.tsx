@@ -2,6 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 import Icon from "@/components/ui/icon";
 import { useState } from "react";
 
@@ -11,6 +14,7 @@ const equipmentData = [
     name: "Экскаватор",
     description: "Гусеничный экскаватор для земляных работ",
     price: "от 3 500 ₽/час",
+    hourlyRate: 3500,
     image: "https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/10004228-7d53-4d2c-b20a-3c8879fa6afc.jpg",
     icon: "Shovel"
   },
@@ -19,6 +23,7 @@ const equipmentData = [
     name: "Бульдозер",
     description: "Мощный бульдозер для планировки территории",
     price: "от 4 000 ₽/час",
+    hourlyRate: 4000,
     image: "https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/be639b76-b8b8-4ba0-a2ca-109442cb8376.jpg",
     icon: "Hammer"
   },
@@ -27,6 +32,7 @@ const equipmentData = [
     name: "Кран",
     description: "Автокран грузоподъёмностью до 25 тонн",
     price: "от 5 000 ₽/час",
+    hourlyRate: 5000,
     image: "https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/388e4715-da0c-4892-9f6b-02ee94e7acad.jpg",
     icon: "Truck"
   },
@@ -35,6 +41,7 @@ const equipmentData = [
     name: "Погрузчик",
     description: "Фронтальный погрузчик для сыпучих материалов",
     price: "от 2 800 ₽/час",
+    hourlyRate: 2800,
     image: "https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/be639b76-b8b8-4ba0-a2ca-109442cb8376.jpg",
     icon: "Container"
   }
@@ -47,9 +54,39 @@ export default function Index() {
     message: ""
   });
 
+  const [calculator, setCalculator] = useState({
+    equipment: "",
+    hours: "8",
+    days: "1",
+    withOperator: "yes"
+  });
+
+  const [totalCost, setTotalCost] = useState(0);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+  };
+
+  const calculateCost = () => {
+    const selectedEquipment = equipmentData.find(e => e.name === calculator.equipment);
+    if (!selectedEquipment) return 0;
+
+    const baseRate = selectedEquipment.hourlyRate;
+    const hours = parseInt(calculator.hours);
+    const days = parseInt(calculator.days);
+    const operatorCost = calculator.withOperator === "yes" ? 1500 : 0;
+
+    const hourlyTotal = (baseRate + operatorCost) * hours;
+    const discount = days >= 7 ? 0.15 : days >= 3 ? 0.1 : 0;
+    const total = hourlyTotal * days * (1 - discount);
+
+    return Math.round(total);
+  };
+
+  const handleCalculate = () => {
+    const cost = calculateCost();
+    setTotalCost(cost);
   };
 
   return (
@@ -90,10 +127,101 @@ export default function Index() {
                 <Icon name="Search" size={20} className="mr-2" />
                 Выбрать технику
               </Button>
-              <Button size="lg" variant="outline" className="border-2 text-lg px-8 py-6">
-                <Icon name="Calculator" size={20} className="mr-2" />
-                Рассчитать стоимость
-              </Button>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="lg" variant="outline" className="border-2 text-lg px-8 py-6">
+                    <Icon name="Calculator" size={20} className="mr-2" />
+                    Рассчитать стоимость
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[500px]">
+                  <DialogHeader>
+                    <DialogTitle className="font-heading text-2xl">Калькулятор стоимости</DialogTitle>
+                    <DialogDescription>
+                      Рассчитайте примерную стоимость аренды техники
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="equipment">Тип техники</Label>
+                      <Select value={calculator.equipment} onValueChange={(value) => setCalculator({...calculator, equipment: value})}>
+                        <SelectTrigger id="equipment">
+                          <SelectValue placeholder="Выберите технику" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {equipmentData.map((item) => (
+                            <SelectItem key={item.id} value={item.name}>
+                              {item.name} - {item.price}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="hours">Часов в день</Label>
+                      <Select value={calculator.hours} onValueChange={(value) => setCalculator({...calculator, hours: value})}>
+                        <SelectTrigger id="hours">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="4">4 часа</SelectItem>
+                          <SelectItem value="8">8 часов (смена)</SelectItem>
+                          <SelectItem value="12">12 часов</SelectItem>
+                          <SelectItem value="24">24 часа</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="days">Количество дней</Label>
+                      <Select value={calculator.days} onValueChange={(value) => setCalculator({...calculator, days: value})}>
+                        <SelectTrigger id="days">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">1 день</SelectItem>
+                          <SelectItem value="2">2 дня</SelectItem>
+                          <SelectItem value="3">3 дня (-10%)</SelectItem>
+                          <SelectItem value="5">5 дней (-10%)</SelectItem>
+                          <SelectItem value="7">7 дней (-15%)</SelectItem>
+                          <SelectItem value="14">14 дней (-15%)</SelectItem>
+                          <SelectItem value="30">30 дней (-15%)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="operator">С оператором</Label>
+                      <Select value={calculator.withOperator} onValueChange={(value) => setCalculator({...calculator, withOperator: value})}>
+                        <SelectTrigger id="operator">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="yes">Да (+1 500 ₽/час)</SelectItem>
+                          <SelectItem value="no">Нет</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button onClick={handleCalculate} className="w-full bg-primary hover:bg-primary/90" size="lg">
+                      <Icon name="Calculator" size={20} className="mr-2" />
+                      Рассчитать
+                    </Button>
+                    {totalCost > 0 && (
+                      <Card className="bg-primary/5 border-2 border-primary">
+                        <CardContent className="pt-6">
+                          <div className="text-center">
+                            <p className="text-sm text-muted-foreground mb-2">Итоговая стоимость:</p>
+                            <p className="text-4xl font-heading font-bold text-primary">
+                              {totalCost.toLocaleString('ru-RU')} ₽
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {parseInt(calculator.days) >= 3 && "Скидка применена!"}
+                            </p>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         </div>
