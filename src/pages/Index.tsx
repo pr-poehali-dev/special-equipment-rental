@@ -54,7 +54,7 @@ export default function Index() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl md:text-3xl font-heading font-bold text-primary flex items-center gap-2">
             <Icon name="Wrench" size={32} className="text-primary" />
-            СпецТех
+            ООО СТ РАВИКА
           </h1>
           <nav className="hidden md:flex gap-6">
             <a href="#catalog" className="text-foreground hover:text-primary transition-colors font-medium">
@@ -64,10 +64,12 @@ export default function Index() {
               Контакты
             </a>
           </nav>
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Icon name="Phone" size={18} className="mr-2" />
-            Позвонить
-          </Button>
+          <a href="tel:+79270624639">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Icon name="Phone" size={18} className="mr-2" />
+              Позвонить
+            </Button>
+          </a>
         </div>
       </header>
 
@@ -195,8 +197,8 @@ export default function Index() {
                       </div>
                       <div>
                         <h3 className="font-heading font-bold text-lg mb-1">Телефон</h3>
-                        <a href="tel:+79991234567" className="text-primary text-xl font-semibold hover:underline">
-                          +7 (999) 123-45-67
+                        <a href="tel:+79270624639" className="text-primary text-xl font-semibold hover:underline">
+                          +7 (927) 062-46-39
                         </a>
                       </div>
                     </div>
@@ -285,7 +287,7 @@ export default function Index() {
             <div>
               <h3 className="text-2xl font-heading font-bold mb-4 flex items-center gap-2">
                 <Icon name="Wrench" size={28} className="text-primary" />
-                СпецТех
+                ООО СТ РАВИКА
               </h3>
               <p className="text-background/80">
                 Профессиональная аренда спецтехники с 2010 года
@@ -303,7 +305,7 @@ export default function Index() {
               <ul className="space-y-2 text-background/80">
                 <li className="flex items-center gap-2">
                   <Icon name="Phone" size={16} />
-                  +7 (999) 123-45-67
+                  +7 (927) 062-46-39
                 </li>
                 <li className="flex items-center gap-2">
                   <Icon name="Mail" size={16} />
@@ -313,7 +315,7 @@ export default function Index() {
             </div>
           </div>
           <div className="border-t border-background/20 mt-8 pt-8 text-center text-background/60">
-            <p>&copy; 2024 СпецТех. Все права защищены</p>
+            <p>&copy; 2024 ООО СТ РАВИКА. Все права защищены</p>
           </div>
         </div>
       </footer>
