@@ -218,8 +218,8 @@ export default function Index() {
                       </div>
                       <div>
                         <h3 className="font-heading font-bold text-lg mb-1">Email</h3>
-                        <a href="mailto:info@specteh.ru" className="text-secondary text-xl font-semibold hover:underline">
-                          info@specteh.ru
+                        <a href="mailto:ST.Ravika-info@yandex.ru" className="text-secondary text-xl font-semibold hover:underline">
+                          ST.Ravika-info@yandex.ru
                         </a>
                       </div>
                     </div>
@@ -234,7 +234,7 @@ export default function Index() {
                       <div>
                         <h3 className="font-heading font-bold text-lg mb-1">Адрес</h3>
                         <p className="text-muted-foreground text-lg">
-                          г. Москва, ул. Строительная, 15
+                          г. Москва, Орехово-Борисово
                         </p>
                       </div>
                     </div>
@@ -321,7 +321,7 @@ export default function Index() {
                 </li>
                 <li className="flex items-center gap-2">
                   <Icon name="Mail" size={16} />
-                  info@specteh.ru
+                  ST.Ravika-info@yandex.ru
                 </li>
               </ul>
             </div>
