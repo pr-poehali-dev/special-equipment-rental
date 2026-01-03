@@ -52,10 +52,16 @@ export default function Index() {
     <div className="min-h-screen bg-gradient-to-b from-white to-muted/30">
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl md:text-3xl font-heading font-bold text-primary flex items-center gap-2">
-            <Icon name="Wrench" size={32} className="text-primary" />
-            ООО СТ РАВИКА
-          </h1>
+          <div className="flex items-center gap-3">
+            <img 
+              src="https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/58c5731c-f43d-452c-82be-52c3d1b3fae4.jpg" 
+              alt="ООО СТ РАВИКА" 
+              className="h-12 w-12 rounded-lg object-cover"
+            />
+            <h1 className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+              ООО СТ РАВИКА
+            </h1>
+          </div>
           <nav className="hidden md:flex gap-6">
             <a href="#catalog" className="text-foreground hover:text-primary transition-colors font-medium">
               Каталог
@@ -285,10 +291,16 @@ export default function Index() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-2xl font-heading font-bold mb-4 flex items-center gap-2">
-                <Icon name="Wrench" size={28} className="text-primary" />
-                ООО СТ РАВИКА
-              </h3>
+              <div className="flex items-center gap-3 mb-4">
+                <img 
+                  src="https://cdn.poehali.dev/projects/848cd30d-d4a1-4e1a-8c6e-d2aee870d48b/files/58c5731c-f43d-452c-82be-52c3d1b3fae4.jpg" 
+                  alt="ООО СТ РАВИКА" 
+                  className="h-10 w-10 rounded-lg object-cover"
+                />
+                <h3 className="text-2xl font-heading font-bold text-background">
+                  ООО СТ РАВИКА
+                </h3>
+              </div>
               <p className="text-background/80">
                 Профессиональная аренда спецтехники с 2010 года
               </p>
